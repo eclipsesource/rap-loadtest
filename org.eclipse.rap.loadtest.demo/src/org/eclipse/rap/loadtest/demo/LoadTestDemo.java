@@ -8,7 +8,7 @@ public class LoadTestDemo implements ApplicationConfiguration {
 
   @Override
   public void configure( Application application ) {
-    application.addEntryPoint( "/loadtest", LoadTestEntryPoint.class, null );
+    application.addEntryPoint( "/", LoadTestEntryPoint.class, null );
   }
 
 }
