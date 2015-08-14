@@ -8,4 +8,4 @@ The folder [org.eclipse.rap.loadtest.demo](org.eclipse.rap.loadtest.demo) contai
 
 ## Gatling scripts
 
-The folder [org.eclipse.rap.loadtest.gatling](org.eclipse.rap.loadtest.gatling) contains [Gatling](http://gatling.io/)  classes used to issue requests at a high rate.
+The folder [org.eclipse.rap.loadtest.gatling](org.eclipse.rap.loadtest.gatling) contains [Gatling](http://gatling.io/) classes used to issue requests at a high rate. Adjust the variables baseUrl and basePath to your deployment and copy the scala files into the directory `user-files/simulations/` in your gatling installation. Gatling will pick up and compile these files at startup and ask which one to execute.
