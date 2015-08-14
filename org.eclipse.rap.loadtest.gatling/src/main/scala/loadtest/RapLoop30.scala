@@ -22,17 +22,18 @@ class RapLoop30 extends Simulation {
   val textId = "w104"
   val buttonId = "w105"
 
-  val baseUrl = "http://10.233.145.246:8080"
+  val baseUrl = "http://127.0.0.1:8080"
+  val basePath = "/rap-loadtest-3.0.0/"
   val headers = Map("Pragma" -> "no-cache")
 
   val httpProtocol = http.baseURL(baseUrl).inferHtmlResources()
 
   val scn = scenario("RapSimulation")
-    .repeat(500, "count") {
+    .repeat(100, "count") {
       uiRequest()
     }
 
-  setUp(scn.inject(rampUsers(1000) over(300 seconds))).protocols(httpProtocol)
+  setUp(scn.inject(rampUsers(1000) over(60 seconds))).protocols(httpProtocol)
 
   def uiRequest() = {
     exec(session => {
@@ -53,7 +54,7 @@ class RapLoop30 extends Simulation {
 
   def initialRequest() = {
     exec(http("initial request")
-      .post("/rap-loadtest-3.0/")
+      .post(basePath)
       .headers(headers)
       .body(StringBody("""{"head":{"requestCounter":${count}},"operations":${req_ops}}""")).asJSON
       .check(status.is(200))
@@ -64,7 +65,7 @@ class RapLoop30 extends Simulation {
 
   def subsequentRequest() = {
     exec(http("request ${count}")
-      .post("/rap-loadtest-3.0/?cid=${cid}")
+      .post(basePath + "?cid=${cid}")
       .headers(headers)
       .body(StringBody("""{"head":{"requestCounter":${count}},"operations":${req_ops}}""")).asJSON
       .check(status.is(200))

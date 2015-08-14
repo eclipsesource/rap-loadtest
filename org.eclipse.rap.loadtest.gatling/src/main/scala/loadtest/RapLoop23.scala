@@ -22,7 +22,8 @@ class RapLoop23 extends Simulation {
   val textId = "w90"
   val buttonId = "w91"
 
-  val baseUrl = "http://10.233.145.246:8080"
+  val baseUrl = "http://127.0.0.1:8080"
+  val basePath = "/rap-loadtest-2.3.2/"
   val headers = Map("Pragma" -> "no-cache")
 
   val httpProtocol = http.baseURL(baseUrl).inferHtmlResources()
@@ -53,7 +54,7 @@ class RapLoop23 extends Simulation {
 
   def initialRequest() = {
     exec(http("initial request")
-      .post("/rap-loadtest-2.3/?cid=4711")
+      .post(basePath + "?cid=4711")
       .headers(headers)
       .body(StringBody("""{"head":{"rwt_initialize":true},"operations":${req_ops}}""")).asJSON
       .check(status.is(200))
@@ -63,7 +64,7 @@ class RapLoop23 extends Simulation {
 
   def subsequentRequest() = {
     exec(http("request ${count}")
-      .post("/rap-loadtest-2.3/?cid=4711")
+      .post(basePath + "?cid=4711")
       .headers(headers)
       .body(StringBody("""{"head":{"requestCounter":${count}},"operations":${req_ops}}""")).asJSON
       .check(status.is(200))
